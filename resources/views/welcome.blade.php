@@ -1,33 +1,6 @@
 <x-global>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Sleepy</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Start</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Szukaj noclegu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Moje rezerwacje</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Dodaj ofertę</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">O nas</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
 
     <div class="img-text-container">
         <img src="{{ asset('img/banner.jpg') }}" alt="banner">
@@ -39,7 +12,7 @@
             <h1 class="text-center p-5">Wyszukaj swoje wymarzone miejsce na nocleg</h1>
         </div>
 
-        <form class="row g-3">
+        <form class="row g-3" method="get" action="{{route("search")}}">
             <div class="col-md-6">
                 <label for="dateFrom" class="form-label">Data od</label>
                 <input type="date" class="form-control" id="dateFrom">
@@ -72,17 +45,5 @@
                 <button type="submit" class="btn btn-primary">Szukaj</button>
             </div>
         </form>
-
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">© 2021 Company, Inc</p>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-        </footer>
     </div>
 </x-global>
