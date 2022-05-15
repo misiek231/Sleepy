@@ -12,7 +12,7 @@
             <h1 class="text-center p-5">Wyszukaj swoje wymarzone miejsce na nocleg</h1>
         </div>
 
-        <form class="row g-3" method="get" action="{{route("search")}}">
+        <form class="row g-3" method="get" action="{{route("offers.index")}}">
             <div class="col-md-6">
                 <label for="dateFrom" class="form-label">Data od</label>
                 <input type="date" class="form-control" id="dateFrom">

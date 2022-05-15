@@ -24,13 +24,13 @@
                             <a class="nav-link active" aria-current="page" href="{{route("index")}}">Start</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route("search")}}">Szukaj noclegu</a>
+                            <a class="nav-link active" aria-current="page" href="{{route("offers.index")}}">Szukaj noclegu</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Moje rezerwacje</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route("create-offer")}}">Dodaj ofertę</a>
+                            <a class="nav-link active" aria-current="page" href="{{route("offers.create")}}">Dodaj ofertę</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">O nas</a>

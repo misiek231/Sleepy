@@ -4,7 +4,7 @@
             <div class="card col-lg-3 col-sm-12 p-3" style="height: fit-content">
                 <h3>Filtry</h3>
 
-                <form class="row g-3 align-items-end" method="get" action="{{route("search")}}">
+                <form class="row g-3 align-items-end" method="get" action="{{route("offers.index")}}">
                     <div class="col-md-6">
                         <label for="dateFrom" class="form-label">Data od</label>
                         <input type="date" class="form-control" id="dateFrom">
@@ -39,22 +39,22 @@
                 </form>
             </div>
             <div class="d-flex gap-2 flex-column col-lg-8 col-sm-12 p-0">
-                @for($i = 0; $i < 10; $i++)
+                @foreach($offers as $offer)
                     <div class="card">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="{{asset("storage/home.jpg")}}" class="img-fluid h-100 p-0 m-0" alt="img">
+                                <img src="{{asset("storage/{$offer->image}")}}" class="img-fluid h-100 p-0 m-0" alt="img">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Domek nad zalewem</h5>
-                                    <p class="card-text">Oferujemy pokoje w świetnej cenie, wyżywienie, atrakcje dookoła. Domek jest przystosowany dla rodzin z dziećmi jak i dla imprezujących studentów</p>
-                                    <a href="#" class="btn btn-primary">Sprawdź szczegóły</a>
+                                    <h5 class="card-title">{{$offer->name}}</h5>
+                                    <p class="card-text">{{$offer->description}}</p>
+                                    <a href="{{route("offers.show", $offer->id)}}" class="btn btn-primary">Sprawdź szczegóły</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
         </div>
     </div>

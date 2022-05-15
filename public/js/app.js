@@ -1,126 +1,13 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./resources/ts/app.ts":
 /*!*****************************!*\
   !*** ./resources/ts/app.ts ***!
   \*****************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (() => {
 
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var createOfferHelpers_1 = __webpack_require__(/*! ./createOfferHelpers */ "./resources/ts/createOfferHelpers.ts");
-
-document.addEventListener("DOMContentLoaded", function (event) {
-  new createOfferHelpers_1["default"]().init();
-});
-
-/***/ }),
-
-/***/ "./resources/ts/createOfferHelpers.ts":
-/*!********************************************!*\
-  !*** ./resources/ts/createOfferHelpers.ts ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var CreateOfferHelpers = function () {
-  function CreateOfferHelpers() {
-    this.roomInputs = [{
-      id: "room_name",
-      name: "Nazwa",
-      size: "3",
-      type: "text"
-    }, {
-      id: "room_size",
-      name: "Ilośc osób",
-      size: "4",
-      type: "number"
-    }, {
-      id: "room_price",
-      name: "Cena",
-      size: "5",
-      type: "number"
-    }, {
-      id: "room_description",
-      name: "Opis pokoju",
-      size: "col-12",
-      type: "textarea"
-    }];
-  }
-
-  CreateOfferHelpers.prototype.createRoomInputDiv = function (_a) {
-    var id = _a.id,
-        name = _a.name,
-        size = _a.size,
-        type = _a.type;
-    var inputDiv = document.createElement("div");
-    inputDiv.className = "col-".concat(size);
-    var inputLabel = document.createElement("label");
-    inputLabel.className = "form-label";
-    inputLabel.innerHTML = name;
-    inputLabel.htmlFor = id;
-    var input = document.createElement("input");
-    input.id = id;
-    input.className = "form-control";
-    input.name = "".concat(id, "[]");
-    input.type = type;
-    inputDiv.appendChild(inputLabel);
-    inputDiv.appendChild(input);
-    return inputDiv;
-  };
-
-  CreateOfferHelpers.prototype.addRoom = function () {
-    var _this = this;
-
-    var room = document.createElement("div");
-    room.className = "row g-3 border pb-4";
-    this.roomInputs.forEach(function (input) {
-      room.appendChild(_this.createRoomInputDiv(input));
-    });
-    document.getElementById("rooms").appendChild(room);
-  };
-
-  CreateOfferHelpers.prototype.removeRoom = function () {
-    var rooms = document.getElementById("rooms");
-
-    if (rooms.children.length > 1) {
-      rooms.removeChild(rooms.lastChild);
-    }
-  };
-
-  CreateOfferHelpers.prototype.init = function () {
-    var _this = this;
-
-    document.getElementById('add-room-offer-button').onclick = function (ev) {
-      _this.addRoom();
-    };
-
-    document.getElementById('remove-room-offer-button').onclick = function (ev) {
-      _this.removeRoom();
-    };
-
-    var rooms = document.getElementById("rooms");
-
-    if (rooms.children.length == 0) {
-      this.addRoom();
-    }
-  };
-
-  return CreateOfferHelpers;
-}();
-
-exports["default"] = CreateOfferHelpers;
 
 /***/ }),
 
@@ -130,6 +17,7 @@ exports["default"] = CreateOfferHelpers;
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 

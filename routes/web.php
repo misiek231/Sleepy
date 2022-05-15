@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name("index");
-
-Route::get('/search', function () {
-    return view('search');
-})->name('search');
-
-Route::get('/create-offer', function () {
-    return view('create-offer');
-})->name('create-offer');
+Route::get('/', fn() => view('welcome'))->name("index");
+Route::resource('offers', OfferController::class);
+Route::resource('rooms', RoomController::class);
