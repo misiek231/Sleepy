@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOfferRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class OfferController extends Controller
 {
@@ -65,24 +66,37 @@ class OfferController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Offer $offer
-     * @return \Illuminate\Http\Response
+     * @param int $offerId
+     * @return View
      */
-    public function edit(Offer $offer)
+    public function edit(int $offerId): View
     {
-        //
+        return view('offers.create', [
+            'offer' => Offer::findOrFail($offerId)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateOfferRequest  $request
-     * @param Offer $offer
-     * @return \Illuminate\Http\Response
+     * @param UpdateOfferRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(UpdateOfferRequest $request, Offer $offer)
+    public function update(UpdateOfferRequest $request, int $id): RedirectResponse
     {
-        //
+        $trip = Offer::findOrFail($id);
+        $oldFileName = $trip->image;
+        $input = $request->all();
+        $trip->update($input);
+        if ($request->hasFile('image')) {
+            $fileName = $request->image->getClientOriginalName();
+            $request->file('image')->storeAs('', $fileName, 'public');
+            $trip->image = $fileName;
+            $trip->save();
+            Storage::disk('public')->delete($oldFileName);
+        }
+        return redirect()->route('offers.show', $trip->id);
     }
 
     /**

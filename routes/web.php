@@ -17,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name("index");
 Route::resource('offers', OfferController::class);
-Route::resource('rooms', RoomController::class);
+Route::controller(RoomController::class)->group(function () {
+    Route::get('/rooms', 'index')->name('rooms.index');
+    Route::get('/rooms/create/{offerId}', 'create')->name('rooms.create');
+    Route::post('/rooms', 'store')->name('rooms.store');
+    Route::get('/rooms/{id}', 'show')->name('rooms.show');
+    Route::get('/rooms/{id}/edit', 'edit')->name('rooms.edit');
+    Route::put('/rooms/{id}', 'update')->name('rooms.update');
+});

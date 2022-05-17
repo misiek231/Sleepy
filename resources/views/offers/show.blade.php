@@ -3,9 +3,12 @@
         <img src="{{asset("storage/{$offer->image}")}}" class="img-fluid w-100">
         <h1 class="mt-5"> {{$offer->name}} </h1>
         <p> {{$offer->description}} </p>
+        <a href="{{route("offers.edit", $offer->id)}}" class="btn btn-primary col-2">Edytuj ofertę</a>
 
-        <h2>Dostępne pokoje</h2>
-
+        <div class="row">
+            <h2 class="col-3">Dostępne pokoje</h2>
+            <a href="{{route("rooms.create", $offer->id)}}" class="btn btn-primary col-2">Dodaj pokój</a>
+        </div>
         <div class="row">
             @foreach ($offer->rooms as $room)
                 <div class="col-md-4">

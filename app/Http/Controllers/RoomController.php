@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offer;
 use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
@@ -22,11 +23,13 @@ class RoomController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param int $offerId
+     * @return View
      */
-    public function create()
+    public function create(int $offerId): View
     {
-        //
+        $offer = Offer::findOrFail($offerId);
+        return view('rooms.create', ['offer' => $offer]);
     }
 
     /**
@@ -37,7 +40,9 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        //
+        $requestData = $request->all();
+        $room = Room::create($requestData);
+        return redirect()->route('offers.show', $room->offer_id);
     }
 
     /**
