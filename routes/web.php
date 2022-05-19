@@ -24,4 +24,5 @@ Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms/{id}', 'show')->name('rooms.show');
     Route::get('/rooms/{id}/edit', 'edit')->name('rooms.edit');
     Route::put('/rooms/{id}', 'update')->name('rooms.update');
+    Route::delete('/rooms/{id}', 'destroy')->name('rooms.destroy');
 });

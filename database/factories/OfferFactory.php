@@ -17,7 +17,11 @@ class OfferFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->company(),
+            'description' => $this->faker->paragraph(nbSentences: 3),
+            'image' => $this->faker->imageUrl(640, 480, 'house'),
+            'place' => $this->faker->city(),
+            'accommodationType' => ['holet', 'pensjonat', 'Kwatera prywata'][rand(0, 2)],
         ];
     }
 }

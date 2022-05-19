@@ -30,6 +30,9 @@
                             <a class="nav-link active" aria-current="page" href="#">Moje rezerwacje</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Moje oferty</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route("offers.create")}}">Dodaj ofertę</a>
                         </li>
                         <li class="nav-item">

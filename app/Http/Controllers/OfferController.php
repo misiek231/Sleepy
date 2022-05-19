@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Offer;
+use App\Http\Requests\Filters\OfferFilterRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
-use Illuminate\Contracts\View\Factory;
+use App\Models\Offer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -17,10 +17,10 @@ class OfferController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(OfferFilterRequest $request): View
     {
         return view('offers.index', [
-            'offers' => Offer::all(),
+            'offers' => Offer::filter($request)->get(),
         ]);
     }
 

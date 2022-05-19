@@ -7,13 +7,15 @@ use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -36,7 +38,7 @@ class RoomController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreRoomRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreRoomRequest $request)
     {
@@ -61,34 +63,41 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
+     * @param int $roomId
+     * @return View
      */
-    public function edit(Room $room)
+    public function edit(int $roomId): View
     {
-        //
+        $room = Room::findOrFail($roomId);
+        $offer = $room->offer;
+        return view('rooms.create', ['room' => $room, 'offer' => $offer]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRoomRequest  $request
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
+     * @param UpdateRoomRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(UpdateRoomRequest $request, Room $room)
+    public function update(UpdateRoomRequest $request, int $id): RedirectResponse
     {
-        //
+        $room = Room::findOrFail($id);
+        $input = $request->all();
+        $room->update($input);
+        return redirect()->route('rooms.show', $room->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy(Room $room)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        $room = Room::findOrFail($id);
+        $room->delete();
+        return redirect()->route('offers.show', $room->offer_id);
     }
 }

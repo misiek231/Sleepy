@@ -21,16 +21,6 @@ class OfferSeeder extends Seeder
         Room::truncate();
         Offer::truncate();
         Schema::enableForeignKeyConstraints();
-
-        Offer::upsert(
-            [
-                [
-                    'name' => 'Pokoje pracownicze u Basi',
-                    'description' => 'Dom z 2 pokojami dla pracowników wyposażony w wiele udogodnień dla pracy zdalej, blisko wiele atrakcji.',
-                    'image' => 'home.jpg', 'place' => 'Kraków', 'accommodationType' => 'Pensjonat'
-                ],
-            ],
-            'name'
-        );
+        Offer::factory(50)->create();
     }
 }
