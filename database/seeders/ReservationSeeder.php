@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Offer;
+use App\Models\Reservation;
 use App\Models\Room;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class RoomSeeder extends Seeder
+class ReservationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,8 +18,9 @@ class RoomSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        Room::truncate();
+        Reservation::truncate();
         Schema::enableForeignKeyConstraints();
-        Room::factory(500)->create();
+
+        Reservation::factory(40)->create();
     }
 }
