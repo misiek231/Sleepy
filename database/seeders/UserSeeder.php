@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Offer;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class UserSeeder extends Seeder
 {
@@ -14,7 +17,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        Room::truncate();
+        Offer::truncate();
         User::truncate();
-        User::factory(3)->create();
+        Schema::enableForeignKeyConstraints();
+        User::factory(10)->create();
     }
 }

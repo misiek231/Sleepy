@@ -18,10 +18,11 @@ class OfferFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'description' => $this->faker->paragraph(nbSentences: 3),
+            'description' => $this->faker->paragraph(nbSentences: 5),
             'image' => $this->faker->imageUrl(640, 480, 'house'),
             'place' => $this->faker->city(),
             'accommodationType' => ['holet', 'pensjonat', 'Kwatera prywata'][rand(0, 2)],
+            'user_id' => rand(1, 10),
         ];
     }
 }
