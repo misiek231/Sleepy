@@ -9,6 +9,20 @@
                 <p class="card-text">{{$offer->description}}</p>
                 <a href="{{route("offers.show", $offer->id)}}" class="btn btn-info">Sprawdź szczegóły</a>
                 <a href="{{route("offers.edit", $offer->id)}}" class="btn btn-primary">Edytuj</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-room-modal-{{$offer->id}}">
+                    Usuń
+                </button>
+
+                <form method="POST" action="{{route('offers.destroy', $offer->id)}}">
+                    @csrf
+                    @method("DELETE")
+                    @include('components.form-modal',
+                             ['id' => "delete-room-modal-$offer->id",
+                             'title' => 'Uwaga!',
+                             'body' => "Czy na pewno chcesz usunąć ofertę: $offer->name. Zmiany są nie odwracalne",
+                             'type' => 'danger',
+                             'button' => 'Usuń'])
+                </form>
             </div>
         </div>
     </div>

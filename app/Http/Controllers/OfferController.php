@@ -117,11 +117,14 @@ class OfferController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Offer $offer
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy(Offer $offer)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        $offer = Offer::findOrFail($id);
+        $offer->rooms()->delete();
+        $offer->delete();
+        return redirect()->route('offers.my');
     }
 }
