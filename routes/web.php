@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn() => view('welcome'))->name("index");
+Route::get('/offers/my', [OfferController::class, 'myOffers'])->name('offers.my');
 Route::resource('offers', OfferController::class);
 Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms', 'index')->name('rooms.index');

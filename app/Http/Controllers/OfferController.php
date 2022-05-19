@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Offer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class OfferController extends Controller
@@ -15,12 +16,25 @@ class OfferController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param OfferFilterRequest $request
      * @return View
      */
     public function index(OfferFilterRequest $request): View
     {
         return view('offers.index', [
             'offers' => Offer::filter($request)->paginate(10),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View
+     */
+    public function myOffers(): View
+    {
+        return view('offers.my-offers', [
+            'offers' => Offer::where('user_id', '=', Auth::id())->paginate(10),
         ]);
     }
 
@@ -46,6 +60,7 @@ class OfferController extends Controller
         $request->file('image')->storeAs('', $fileName, 'public');
         $requestData = $request->all();
         $requestData['image'] = $fileName;
+        $requestData['user_id'] = Auth::id();
         $offer = Offer::create($requestData);
         return redirect()->route('offers.show', $offer->id);
     }
