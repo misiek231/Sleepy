@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,12 @@ Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms/{id}/edit', 'edit')->name('rooms.edit');
     Route::put('/rooms/{id}', 'update')->name('rooms.update');
     Route::delete('/rooms/{id}', 'destroy')->name('rooms.destroy');
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'authenticate')->name('login.authenticate');
+    Route::get('/logout', 'logout')->name('logout');
+    Route::get('/register', 'create')->name('register');
+    Route::post('/register', 'store')->name('register.store');
 });
