@@ -22,6 +22,7 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="d-flex justify-content-center">{{$offers->links()}}</div>
             </div>
         </div>
     </div>

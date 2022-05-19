@@ -20,7 +20,7 @@ class OfferController extends Controller
     public function index(OfferFilterRequest $request): View
     {
         return view('offers.index', [
-            'offers' => Offer::filter($request)->get(),
+            'offers' => Offer::filter($request)->paginate(10),
         ]);
     }
 
