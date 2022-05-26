@@ -55,8 +55,17 @@ class RoomController extends Controller
      */
     public function show(int $id): View
     {
+        $room = Room::findOrFail($id);
+        $disabledDates = $room->reservations->map(function ($reservation) {
+            return [
+                'start' => $reservation->date_from,
+                'end' => $reservation->date_to,
+            ];
+        });
+
         return view('rooms.show', [
-            'room' => Room::findOrFail($id)
+            'room' => $room,
+            'disabledDates' => $disabledDates
         ]);
     }
 

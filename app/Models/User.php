@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -41,4 +42,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        return $this->role_id == DB::table('roles')->where('name', 'admin')->value('id');
+    }
+
+    public function isOfferMaker()
+    {
+        return $this->role_id == DB::table('roles')->where('name', 'ofr_maker')->value('id');
+    }
+
+    public function isOfferTaker()
+    {
+        return $this->role_id == DB::table('roles')->where('name', 'ofr_taker')->value('id');
+    }
 }

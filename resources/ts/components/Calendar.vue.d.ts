@@ -1,19 +1,6 @@
 import { Vue } from 'vue-property-decorator';
+import { DateRange } from '../Types/DateRange';
 export default class Calendar extends Vue {
-    test: any;
-    created(): void;
-    attributes: {
-        key: string;
-        highlight: boolean;
-        dates: ({
-            start: Date;
-            end: Date;
-            span?: undefined;
-        } | {
-            start: Date;
-            span: number;
-            end?: undefined;
-        })[];
-    }[];
+    disabledDates: DateRange[];
     private onInput;
 }

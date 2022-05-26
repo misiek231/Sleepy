@@ -28,7 +28,7 @@
                         </li>
                         @auth()
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Moje rezerwacje</a>
+                                <a class="nav-link active" aria-current="page" href="{{route("reservations.index")}}">Moje rezerwacje</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route('offers.my')}}">Moje oferty</a>

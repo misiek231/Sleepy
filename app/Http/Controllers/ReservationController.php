@@ -33,8 +33,13 @@ class ReservationController extends Controller
     public function create(int $roomId): View
     {
         $room = Room::findOrFail($roomId);
-        $offer = $room->offer;
-        return view("reservations.create", ["room" => $room, "offer" => $offer]);
+        $disabledDates = $room->reservations->map(function ($reservation) {
+            return [
+                'start' => $reservation->date_from,
+                'end' => $reservation->date_to,
+            ];
+        });
+        return view("reservations.create", ["room" => $room, "offer" => $room->offer, "disabledDates" => $disabledDates]);
     }
 
     /**

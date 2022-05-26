@@ -4,39 +4,45 @@
         :value="null"
         @input="onInput"
         color="red"
-        :attributes="attributes"
-        :disabled-dates='{ weekdays: [1, 7] }'
+        :disabled-dates="disabledDates"
     />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
+import { DateRange } from '../Types/DateRange';
 
 @Component({})
 export default class Calendar extends Vue {
 
-    @Prop({default: 'siema'}) test: any;
+    @Prop({default: null}) disabledDates: DateRange[]
 
-    created() {
-        console.log('created');
-        console.log(this.test);
-    }
+    //private attributes: any[];
 
-    attributes = [
-        {
-            key: 'today',
-            highlight: true,
-            dates: [
-                { start: new Date(2022, 4, 2), end: new Date(2022, 4, 5) },
-                { start: new Date(2022, 4, 15), span: 5 } // # of days
-            ]
-        }
-    ]
+    // created() {
+    //     console.log('created');
+    //     console.log(this.disabledDates);
+    //
+    //     this.attributes = [
+    //         {
+    //             key: 'today',
+    //             highlight: true,
+    //             dates: [
+    //                 { start: new Date(2022, 4, 2), end: new Date(2022, 4, 5) },
+    //                 { start: new Date(2022, 4, 15), span: 5 } // # of days
+    //             ]
+    //         }
+    //     ]
+    // }
+
+
 
     private onInput(value: any): void {
         // @ts-ignore
-        window.onCalendarInput(value);
+        if(window.onCalendarInput) {
+            // @ts-ignore
+            window.onCalendarInput(value);
+        }
     }
 
 }

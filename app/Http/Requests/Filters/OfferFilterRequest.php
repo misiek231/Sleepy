@@ -10,18 +10,52 @@ class OfferFilterRequest extends FormRequest implements Filter
 {
     public function filter(Builder $builder)
     {
-        foreach ($this->all() as $key => $value) {
-            if (empty($value)) {
-                continue;
-            }
 
-            switch ($key) {
-                case 'name':
-                    $builder->where('name', 'like', "%{$value}%");
-                    break;
-                default:
-                    break;
-            }
+        $props = $this->all();
+
+        if(isset($props['name'])) {
+            $builder->where('name', 'like', '%'.$props['name'].'%');
+        }
+
+        if(isset($props['dateFrom']) or isset($props['dateTo'])){
+            // if only one date is set, we need to set the other one as well, so it will be a valid range
+            $dateFrom = $props['dateFrom'] ?? $props['dateTo'];
+            $dateTo = $props['dateTo'] ?? $props['dateFrom'];
+
+
+            // if dateForm and dateTo are set, we look for the offers where any reservation overlaps with the date range
+            $builder->whereHas('rooms', function (Builder $builder) use ($dateTo, $dateFrom) {
+                $builder->whereHas('reservations', function (Builder $builder) use ($dateTo, $dateFrom) {
+                    $builder->where('date_from', '>', $dateTo)
+                        ->orWhere('date_to', '<', $dateFrom);
+                });
+            });
+        }
+
+        if(isset($props['place'])) {
+            $builder->where('place', 'like', '%'.$props['place'].'%');
+        }
+
+        if(isset($props['accommodationType'])) {
+            $builder->where('accommodationType', 'like', '%'.$props['accommodationType'].'%');
+        }
+
+        if(isset($props['priceFrom'])) {
+            $builder->whereHas('rooms', function (Builder $builder) use ($props) {
+                $builder->where('price', '>=', $props['priceFrom']);
+            });
+        }
+
+        if(isset($props['priceTo'])) {
+            $builder->whereHas('rooms', function (Builder $builder) use ($props) {
+                $builder->where('price', '<=', $props['priceTo']);
+            });
+        }
+
+        if(isset($props['peopleAmount'])) {
+            $builder->whereHas('rooms', function (Builder $builder) use ($props) {
+                $builder->where('beds_amount', '>=', $props['peopleAmount']);
+            });
         }
     }
 

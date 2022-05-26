@@ -5416,34 +5416,18 @@ var Calendar = function (_super) {
   __extends(Calendar, _super);
 
   function Calendar() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
-
-    _this.attributes = [{
-      key: 'today',
-      highlight: true,
-      dates: [{
-        start: new Date(2022, 4, 2),
-        end: new Date(2022, 4, 5)
-      }, {
-        start: new Date(2022, 4, 15),
-        span: 5
-      }]
-    }];
-    return _this;
+    return _super !== null && _super.apply(this, arguments) || this;
   }
 
-  Calendar.prototype.created = function () {
-    console.log('created');
-    console.log(this.test);
-  };
-
   Calendar.prototype.onInput = function (value) {
-    window.onCalendarInput(value);
+    if (window.onCalendarInput) {
+      window.onCalendarInput(value);
+    }
   };
 
   __decorate([(0, vue_property_decorator_1.Prop)({
-    "default": 'siema'
-  })], Calendar.prototype, "test", void 0);
+    "default": null
+  })], Calendar.prototype, "disabledDates", void 0);
 
   Calendar = __decorate([(0, vue_property_decorator_1.Component)({})], Calendar);
   return Calendar;
@@ -28505,8 +28489,7 @@ var render = function () {
       "is-range": "",
       value: null,
       color: "red",
-      attributes: _vm.attributes,
-      "disabled-dates": { weekdays: [1, 7] },
+      "disabled-dates": _vm.disabledDates,
     },
     on: { input: _vm.onInput },
   })

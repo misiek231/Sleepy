@@ -5,7 +5,7 @@
         <h1 class="text-center">{{$room->name}}</h1>
 
         <div id="app" class="d-flex justify-content-center mb-5">
-            <calendar></calendar>
+            <calendar :disabled-dates="{{$disabledDates}}"></calendar>
         </div>
 
         <form class="row g-3 align-items-end" method="POST" action="{{route("reservations.store")}}">
