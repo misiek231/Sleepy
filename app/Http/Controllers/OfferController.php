@@ -6,6 +6,7 @@ use App\Http\Requests\Filters\OfferFilterRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Offer;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,11 @@ class OfferController extends Controller
      * Display a listing of the resource.
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function myOffers(): View
     {
+        $this->authorize('viewMy', Offer::class);
         return view('offers.my-offers', [
             'offers' => Offer::where('user_id', '=', Auth::id())->paginate(10),
         ]);

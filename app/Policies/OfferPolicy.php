@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Offer;
 use App\Models\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OfferPolicy
@@ -19,6 +20,17 @@ class OfferPolicy
     public function viewAny(User $user): bool
     {
         return true;
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function viewMy(User $user): bool
+    {
+        return $user->isOfferMaker();
     }
 
     /**
