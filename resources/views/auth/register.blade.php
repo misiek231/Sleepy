@@ -37,6 +37,23 @@
                 <input id="password_confirmation" name="password_confirmation" type="password"
                     class="@error('password_confirmation') is-invalid @else is-valid @enderror">
             </div>
+
+            <div class="form-group mb-2">
+
+                <input id="offer-maker"
+                       name="role_id"
+                       type="radio"
+                       value="2">
+
+                <label for="offer-maker">Twórca ofert</label>
+
+                <input id="offer-taker"
+                       name="role_id"
+                       type="radio"
+                       value="3">
+
+                <label for="offer-taker">Klient</label>
+            </div>
             <div class="form-group mt-4">
                 <input type="submit" value="Wyślij">
             </div>

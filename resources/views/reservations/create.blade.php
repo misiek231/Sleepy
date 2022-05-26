@@ -1,11 +1,10 @@
 <x-global>
     <div class="mt-5 container">
-        <h1 class="p-5 text-center">Dodaj rezerwację</h1>
         <h1 class="text-center">{{$offer->name}}</h1>
         <h1 class="text-center">{{$room->name}}</h1>
 
         <div id="app" class="d-flex justify-content-center mb-5">
-            <calendar :disabled-dates="{{$disabledDates}}"></calendar>
+            <calendar :disabled-dates="{{$disabledDates}}" :price="{{$room->price}}"></calendar>
         </div>
 
         <form class="row g-3 align-items-end" method="POST" action="{{route("reservations.store")}}">

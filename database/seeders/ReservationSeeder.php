@@ -21,6 +21,6 @@ class ReservationSeeder extends Seeder
         Reservation::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Reservation::factory(40)->create();
+        //Reservation::factory(40)->create();
     }
 }

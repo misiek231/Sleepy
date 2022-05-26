@@ -25,9 +25,9 @@ class OfferFilterRequest extends FormRequest implements Filter
 
             // if dateForm and dateTo are set, we look for the offers where any reservation overlaps with the date range
             $builder->whereHas('rooms', function (Builder $builder) use ($dateTo, $dateFrom) {
-                $builder->whereHas('reservations', function (Builder $builder) use ($dateTo, $dateFrom) {
-                    $builder->where('date_from', '>', $dateTo)
-                        ->orWhere('date_to', '<', $dateFrom);
+                $builder->whereDoesntHave('reservations', function (Builder $builder) use ($dateTo, $dateFrom) {
+                    $builder->where('date_from', '<', $dateTo)
+                        ->Where('date_to', '>', $dateFrom);
                 });
             });
         }

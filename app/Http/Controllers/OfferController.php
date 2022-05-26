@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Storage;
 
 class OfferController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Offer::class, 'offer');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -68,26 +73,26 @@ class OfferController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param integer $id
+     * @param Offer $offer
      * @return View
      */
-    public function show(int $id): View
+    public function show(Offer $offer): View
     {
         return view('offers.show', [
-            'offer' => Offer::findOrFail($id)
+            'offer' => Offer::findOrFail($offer->id)
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $offerId
+     * @param Offer $offer
      * @return View
      */
-    public function edit(int $offerId): View
+    public function edit(Offer $offer): View
     {
         return view('offers.create', [
-            'offer' => Offer::findOrFail($offerId)
+            'offer' => Offer::findOrFail($offer->id)
         ]);
     }
 
@@ -95,12 +100,12 @@ class OfferController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateOfferRequest $request
-     * @param int $id
+     * @param Offer $offer
      * @return RedirectResponse
      */
-    public function update(UpdateOfferRequest $request, int $id): RedirectResponse
+    public function update(UpdateOfferRequest $request, Offer $offer): RedirectResponse
     {
-        $trip = Offer::findOrFail($id);
+        $trip = Offer::findOrFail($offer->id);
         $oldFileName = $trip->image;
         $input = $request->all();
         $trip->update($input);
@@ -117,12 +122,12 @@ class OfferController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Offer $offer
      * @return RedirectResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(Offer $offer): RedirectResponse
     {
-        $offer = Offer::findOrFail($id);
+        $offer = Offer::findOrFail($offer->id);
         $offer->rooms()->delete();
         $offer->delete();
         return redirect()->route('offers.my');

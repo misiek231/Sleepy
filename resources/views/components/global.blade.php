@@ -26,17 +26,19 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route("offers.index")}}">Szukaj noclegu</a>
                         </li>
-                        @auth()
+                        @can('is-offer-taker')
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route("reservations.index")}}">Moje rezerwacje</a>
                             </li>
+                        @endcan
+                        @can('is-offer-maker')
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route('offers.my')}}">Moje oferty</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route("offers.create")}}">Dodaj ofertę</a>
                             </li>
-                        @endauth
+                        @endcan
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">O nas</a>
                         </li>

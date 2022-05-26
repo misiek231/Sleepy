@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Offer;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -13,82 +14,82 @@ class RoomPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Room $room
+     * @return bool
      */
-    public function view(User $user, Room $room)
+    public function view(User $user, Room $room): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user, Offer $offer): bool
     {
-        //
+        return $offer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Room $room
+     * @return bool
      */
-    public function update(User $user, Room $room)
+    public function update(User $user, Room $room): bool
     {
-        //
+        return $room->offer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Room $room
+     * @return bool
      */
-    public function delete(User $user, Room $room)
+    public function delete(User $user, Room $room): bool
     {
-        //
+        return $room->offer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Room $room
+     * @return bool
      */
-    public function restore(User $user, Room $room)
+    public function restore(User $user, Room $room): bool
     {
-        //
+        return $room->offer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Room $room
+     * @return bool
      */
-    public function forceDelete(User $user, Room $room)
+    public function forceDelete(User $user, Room $room): bool
     {
-        //
+        return $room->offer->user_id === $user->id;
     }
 }

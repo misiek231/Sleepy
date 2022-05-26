@@ -12,6 +12,12 @@ use Illuminate\View\View;
 
 class ReservationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Reservation::class, 'reservation');
+    }
+
     /**
      * Display a listing of the resource.
      *

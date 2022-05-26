@@ -6,7 +6,9 @@ use App\Models\Offer;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -22,6 +24,36 @@ class UserSeeder extends Seeder
         Offer::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
-        User::factory(10)->create();
+        //User::factory(10)->create();
+
+        User::upsert(
+            [
+                [
+                    'name' => 'Admin',
+                    'email' => 'admin@sleepy.com',
+                    'email_verified_at' => now(),
+                    'password' => Hash::make('123'),
+                    'remember_token' => Str::random(10),
+                    'role_id' => 1,
+                ],
+                [
+                    'name' => 'Oferty',
+                    'email' => 'oferty@sleepy.com',
+                    'email_verified_at' => now(),
+                    'password' => Hash::make('123'),
+                    'remember_token' => Str::random(10),
+                    'role_id' => 2,
+                ],
+                [
+                    'name' => 'Rezerwacje',
+                    'email' => 'rezerwacje@sleepy.com',
+                    'email_verified_at' => now(),
+                    'password' => Hash::make('123'),
+                    'remember_token' => Str::random(10),
+                    'role_id' => 3,
+                ],
+            ],
+            'name'
+        );
     }
 }

@@ -35,10 +35,10 @@ Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms', 'index')->name('rooms.index');
     Route::get('/rooms/create/{offerId}', 'create')->name('rooms.create');
     Route::post('/rooms', 'store')->name('rooms.store');
-    Route::get('/rooms/{id}', 'show')->name('rooms.show');
-    Route::get('/rooms/{id}/edit', 'edit')->name('rooms.edit');
-    Route::put('/rooms/{id}', 'update')->name('rooms.update');
-    Route::delete('/rooms/{id}', 'destroy')->name('rooms.destroy');
+    Route::get('/rooms/{room}', 'show')->name('rooms.show');
+    Route::get('/rooms/{room}/edit', 'edit')->name('rooms.edit');
+    Route::put('/rooms/{room}', 'update')->name('rooms.update');
+    Route::delete('/rooms/{room}', 'destroy')->name('rooms.destroy');
 });
 
 Route::controller(AuthController::class)->group(function () {

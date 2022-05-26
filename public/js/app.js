@@ -5416,18 +5416,30 @@ var Calendar = function (_super) {
   __extends(Calendar, _super);
 
   function Calendar() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.days = 0;
+    _this.priceCounted = 0;
+    return _this;
   }
 
   Calendar.prototype.onInput = function (value) {
-    if (window.onCalendarInput) {
-      window.onCalendarInput(value);
+    if (value) {
+      this.days = (value.end.valueOf() - value.start.valueOf()) / (1000 * 60 * 60 * 24) + 1;
+      this.priceCounted = this.price * this.days;
     }
+
+    document.getElementById('date-from').value = value.start.toISOString().split('T')[0];
+    document.getElementById('date-to').value = value.end.toISOString().split('T')[0];
   };
 
   __decorate([(0, vue_property_decorator_1.Prop)({
     "default": null
   })], Calendar.prototype, "disabledDates", void 0);
+
+  __decorate([(0, vue_property_decorator_1.Prop)({
+    "default": null
+  })], Calendar.prototype, "price", void 0);
 
   Calendar = __decorate([(0, vue_property_decorator_1.Component)({})], Calendar);
   return Calendar;
@@ -28484,15 +28496,42 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-date-picker", {
-    attrs: {
-      "is-range": "",
-      value: null,
-      color: "red",
-      "disabled-dates": _vm.disabledDates,
-    },
-    on: { input: _vm.onInput },
-  })
+  return _c(
+    "div",
+    { staticClass: "mt-3" },
+    [
+      _c("v-date-picker", {
+        attrs: {
+          columns: _vm.$screens({ default: 1, lg: 2 }),
+          rows: _vm.$screens({ default: 1, lg: 2 }),
+          "is-expanded": _vm.$screens({ default: true, lg: false }),
+          "is-range": "",
+          value: null,
+          color: "red",
+          "disabled-dates": _vm.disabledDates,
+        },
+        on: { input: _vm.onInput },
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "d-flex justify-content-around mt-3",
+          staticStyle: { width: "100%" },
+        },
+        [
+          _c("p", { staticClass: "fw-bold" }, [
+            _vm._v("Ilość dni: " + _vm._s(_vm.days)),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "fw-bold" }, [
+            _vm._v("Cena: " + _vm._s(_vm.priceCounted) + "zł"),
+          ]),
+        ]
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

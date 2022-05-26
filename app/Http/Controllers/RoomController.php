@@ -6,12 +6,35 @@ use App\Models\Offer;
 use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class RoomController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Room::class, 'room');
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap(): array
+    {
+        return [
+            'index' => 'viewAny',
+            'show' => 'view',
+            'edit' => 'update',
+            'update' => 'update',
+            'destroy' => 'delete',
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,21 +50,26 @@ class RoomController extends Controller
      *
      * @param int $offerId
      * @return View
+     * @throws AuthorizationException
      */
     public function create(int $offerId): View
     {
         $offer = Offer::findOrFail($offerId);
+        $this->authorize('create', [Room::class, $offer]);
         return view('rooms.create', ['offer' => $offer]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRoomRequest  $request
-     * @return Response
+     * @param StoreRoomRequest $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreRoomRequest $request)
+    public function store(StoreRoomRequest $request): RedirectResponse
     {
+        $offer = Offer::findOrFail($request->offer_id);
+        $this->authorize('create', [Room::class, $offer]);
         $requestData = $request->all();
         $room = Room::create($requestData);
         return redirect()->route('offers.show', $room->offer_id);
@@ -50,12 +78,13 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param integer $id
+     * @param Room $room
      * @return View
+     * @throws AuthorizationException
      */
-    public function show(int $id): View
+    public function show(Room $room): View
     {
-        $room = Room::findOrFail($id);
+        $room = Room::findOrFail($room->id);
         $disabledDates = $room->reservations->map(function ($reservation) {
             return [
                 'start' => $reservation->date_from,
@@ -72,12 +101,12 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $roomId
+     * @param Room $room
      * @return View
      */
-    public function edit(int $roomId): View
+    public function edit(Room $room): View
     {
-        $room = Room::findOrFail($roomId);
+        $room = Room::findOrFail($room->id);
         $offer = $room->offer;
         return view('rooms.create', ['room' => $room, 'offer' => $offer]);
     }
@@ -86,12 +115,12 @@ class RoomController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRoomRequest $request
-     * @param int $id
+     * @param Room $room
      * @return RedirectResponse
      */
-    public function update(UpdateRoomRequest $request, int $id): RedirectResponse
+    public function update(UpdateRoomRequest $request, Room $room): RedirectResponse
     {
-        $room = Room::findOrFail($id);
+        $room = Room::findOrFail($room->id);
         $input = $request->all();
         $room->update($input);
         return redirect()->route('rooms.show', $room->id);
@@ -103,9 +132,9 @@ class RoomController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(int $room): RedirectResponse
     {
-        $room = Room::findOrFail($id);
+        $room = Room::findOrFail($room->id);
         $room->delete();
         return redirect()->route('offers.show', $room->offer_id);
     }
