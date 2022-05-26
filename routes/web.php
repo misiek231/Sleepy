@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('welcome'))->name("index");
 Route::get('/offers/my', [OfferController::class, 'myOffers'])->name('offers.my');
 Route::resource('offers', OfferController::class);
+
+Route::controller(ReservationController::class)->group(function () {
+    Route::get('/reservations', 'index')->name('reservations.index');
+    Route::get('/reservations/create/{roomId}', 'create')->name('reservations.create');
+    Route::post('/reservations', 'store')->name('reservations.store');
+    Route::get('/reservations/{id}', 'show')->name('reservations.show');
+    Route::get('/reservations/{id}/edit', 'edit')->name('reservations.edit');
+    Route::put('/reservations/{id}', 'update')->name('reservations.update');
+    Route::delete('/reservations/{id}', 'destroy')->name('reservations.destroy');
+});
+
 Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms', 'index')->name('rooms.index');
     Route::get('/rooms/create/{offerId}', 'create')->name('rooms.create');
