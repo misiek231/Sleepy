@@ -40,6 +40,5 @@
                     <button type="submit" class="btn btn-primary">Rezerwacja</button>
                 @endcan
             </form>
-
     </div>
 </x-global>

@@ -6,8 +6,11 @@ use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Room;
+use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ReservationController extends Controller
@@ -25,8 +28,10 @@ class ReservationController extends Controller
      */
     public function index(): View
     {
+        DB::select('call get_reservations_for_user(?)', [Auth::id()]);
+
         return view('reservations.index', [
-            'reservations' => Reservation::all(),
+            'reservations' => Reservation::where('user_id', Auth::id())->get(),
         ]);
     }
 
@@ -65,18 +70,22 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Reservation  $reservation
-     * @return \Illuminate\Http\Response
+     * @param Reservation $reservation
+     * @return View
      */
-    public function show(Reservation $reservation)
+    public function show(Reservation $reservation): View
     {
-        //
+        $dateFrom = Date::createFromFormat('Y-m-d', $reservation->date_from);
+        $dateTo = Date::createFromFormat('Y-m-d', $reservation->date_to);
+        $totalPrice = $reservation->room->price * $dateTo->diffInDays($dateFrom);
+
+        return view('reservations.show', ['reservation' => $reservation, 'totalPrice' => $totalPrice]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param Reservation $reservation
      * @return \Illuminate\Http\Response
      */
     public function edit(Reservation $reservation)
@@ -88,7 +97,7 @@ class ReservationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateReservationRequest  $request
-     * @param  \App\Models\Reservation  $reservation
+     * @param Reservation $reservation
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
@@ -99,7 +108,7 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Reservation  $reservation
+     * @param Reservation $reservation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Reservation $reservation)

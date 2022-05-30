@@ -25,10 +25,10 @@ Route::controller(ReservationController::class)->group(function () {
     Route::get('/reservations', 'index')->name('reservations.index');
     Route::get('/reservations/create/{roomId}', 'create')->name('reservations.create');
     Route::post('/reservations', 'store')->name('reservations.store');
-    Route::get('/reservations/{id}', 'show')->name('reservations.show');
-    Route::get('/reservations/{id}/edit', 'edit')->name('reservations.edit');
-    Route::put('/reservations/{id}', 'update')->name('reservations.update');
-    Route::delete('/reservations/{id}', 'destroy')->name('reservations.destroy');
+    Route::get('/reservations/{reservation}', 'show')->name('reservations.show');
+    Route::get('/reservations/{reservation}/edit', 'edit')->name('reservations.edit');
+    Route::put('/reservations/{reservation}', 'update')->name('reservations.update');
+    Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
 });
 
 Route::controller(RoomController::class)->group(function () {
