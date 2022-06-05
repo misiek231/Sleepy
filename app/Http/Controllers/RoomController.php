@@ -27,8 +27,6 @@ class RoomController extends Controller
     protected function resourceAbilityMap(): array
     {
         return [
-            'index' => 'viewAny',
-            'show' => 'view',
             'edit' => 'update',
             'update' => 'update',
             'destroy' => 'delete',
