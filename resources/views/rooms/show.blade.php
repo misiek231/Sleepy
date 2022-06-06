@@ -36,7 +36,18 @@
                 <input name="date_from" type="hidden" id="date-from">
                 <input name="date_to" type="hidden" id="date-to">
                 <input name="room_id" type="hidden" value="{{$room->id}}">
-                @can('is-offer-taker')
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @canany(['is-offer-taker', 'is-admin'])
                     <button type="submit" class="btn btn-primary">Rezerwacja</button>
                 @endcan
             </form>

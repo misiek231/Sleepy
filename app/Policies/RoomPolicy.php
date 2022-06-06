@@ -42,7 +42,7 @@ class RoomPolicy
      */
     public function create(User $user, Offer $offer): bool
     {
-        return $offer->user_id === $user->id;
+        return ($offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
@@ -54,7 +54,7 @@ class RoomPolicy
      */
     public function update(User $user, Room $room): bool
     {
-        return $room->offer->user_id === $user->id;
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
@@ -66,7 +66,7 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room): bool
     {
-        return $room->offer->user_id === $user->id;
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
@@ -78,7 +78,7 @@ class RoomPolicy
      */
     public function restore(User $user, Room $room): bool
     {
-        return $room->offer->user_id === $user->id;
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
@@ -90,6 +90,6 @@ class RoomPolicy
      */
     public function forceDelete(User $user, Room $room): bool
     {
-        return $room->offer->user_id === $user->id;
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 }

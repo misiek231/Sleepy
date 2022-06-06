@@ -24,7 +24,10 @@ class StoreRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|unique:offers,name,',
+            'price' => 'required|numeric',
+            'beds_amount' => 'required|numeric',
+            'description' => 'required',
         ];
     }
 }

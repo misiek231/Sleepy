@@ -12,6 +12,23 @@ use Illuminate\View\View;
 class AuthController extends Controller
 {
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View|RedirectResponse
+     */
+    public function index(): View|RedirectResponse
+    {
+        if(!Auth::user()->isAdmin()) {
+            return redirect()->route('index');
+        }
+
+        return view('auth.users', [
+            'users' => User::all(),
+        ]);
+    }
+
+
     public function login(): RedirectResponse|View
     {
         if (Auth::check()) {
@@ -77,5 +94,11 @@ class AuthController extends Controller
         Auth::login($user);
 
         return redirect()->route('index');
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        $user->delete();
+        return redirect()->route('auth.index');
     }
 }

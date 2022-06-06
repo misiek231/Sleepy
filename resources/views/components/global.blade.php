@@ -31,6 +31,18 @@
                                 <a class="nav-link active" aria-current="page" href="{{route("reservations.index")}}">Moje rezerwacje</a>
                             </li>
                         @endcan
+
+                        @can('is-admin')
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{route("reservations.index")}}">Rezerwacje</a>
+                            </li>
+                        @endcan
+
+                        @can('is-admin')
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{route("auth.index")}}">Użytkownicy</a>
+                            </li>
+                        @endcan
                         @can('is-offer-maker')
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route('offers.my')}}">Moje oferty</a>
@@ -39,9 +51,6 @@
                                 <a class="nav-link active" aria-current="page" href="{{route("offers.create")}}">Dodaj ofertę</a>
                             </li>
                         @endcan
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">O nas</a>
-                        </li>
                         @auth()
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route('logout')}}">Wyloguj się</a>

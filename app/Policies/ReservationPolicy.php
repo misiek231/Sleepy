@@ -19,7 +19,7 @@ class ReservationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isOfferTaker();
+        return $user->isOfferTaker() || $user->isAdmin();
     }
 
     /**
@@ -31,7 +31,7 @@ class ReservationPolicy
      */
     public function view(User $user, Reservation $reservation): bool
     {
-        return $reservation->user_id == $user->id;
+        return ($reservation->user_id == $user->id) || $user->isAdmin();
     }
 
     /**
@@ -42,20 +42,7 @@ class ReservationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isOfferTaker();
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param User $user
-     * @param Reservation $reservation
-     * @return bool
-     * @throws Exception
-     */
-    public function update(User $user, Reservation $reservation): bool
-    {
-        throw new Exception('Not implemented');
+        return $user->isOfferTaker() || $user->isAdmin();
     }
 
     /**
@@ -68,32 +55,6 @@ class ReservationPolicy
      */
     public function delete(User $user, Reservation $reservation): bool
     {
-        throw new Exception('Not implemented');
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param Reservation $reservation
-     * @return bool
-     * @throws Exception
-     */
-    public function restore(User $user, Reservation $reservation): bool
-    {
-        throw new Exception('Not implemented');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param Reservation $reservation
-     * @return bool
-     * @throws Exception
-     */
-    public function forceDelete(User $user, Reservation $reservation): bool
-    {
-        throw new Exception('Not implemented');
+        return $user->isAdmin();
     }
 }

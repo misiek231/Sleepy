@@ -127,12 +127,13 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Room $room
      * @return RedirectResponse
      */
-    public function destroy(int $room): RedirectResponse
+    public function destroy(Room $room): RedirectResponse
     {
         $room = Room::findOrFail($room->id);
+        $room->reservations->delete();
         $room->delete();
         return redirect()->route('offers.show', $room->offer_id);
     }

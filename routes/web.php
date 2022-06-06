@@ -47,4 +47,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
     Route::get('/register', 'create')->name('register');
     Route::post('/register', 'store')->name('register.store');
+    Route::get('/users', 'index')->name('auth.index');
+    Route::delete('/users/{user}', 'destroy')->name('users.destroy');
 });

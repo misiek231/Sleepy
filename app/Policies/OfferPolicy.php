@@ -30,7 +30,7 @@ class OfferPolicy
      */
     public function viewMy(User $user): bool
     {
-        return $user->isOfferMaker();
+        return $user->isOfferMaker() || $user->isAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class OfferPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isOfferMaker();
+        return $user->isOfferMaker() || $user->isAdmin();
     }
 
     /**
@@ -65,7 +65,7 @@ class OfferPolicy
      */
     public function update(User $user, Offer $offer): bool
     {
-        return $user->isOfferMaker() && $user->id === $offer->user_id;
+        return ($user->isOfferMaker() && $user->id === $offer->user_id) || $user->isAdmin();
     }
 
     /**
@@ -77,7 +77,7 @@ class OfferPolicy
      */
     public function delete(User $user, Offer $offer): bool
     {
-        return $user->isOfferMaker() && $user->id === $offer->user_id;
+        return ($user->isOfferMaker() && $user->id === $offer->user_id) || $user->isAdmin();
     }
 
     /**
@@ -89,7 +89,7 @@ class OfferPolicy
      */
     public function restore(User $user, Offer $offer): bool
     {
-        return $user->isOfferMaker() && $user->id === $offer->user_id;
+        return ($user->isOfferMaker() && $user->id === $offer->user_id) || $user->isAdmin();
     }
 
     /**
@@ -101,6 +101,6 @@ class OfferPolicy
      */
     public function forceDelete(User $user, Offer $offer): bool
     {
-        return $user->isOfferMaker() && $user->id === $offer->user_id;
+        return ($user->isOfferMaker() && $user->id === $offer->user_id) || $user->isAdmin();
     }
 }

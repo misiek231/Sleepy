@@ -24,7 +24,10 @@ class UpdateOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|unique:offers,name,',
+            'place' => 'required',
+            'accommodationType' => 'required',
+            'description' => 'required',
         ];
     }
 }

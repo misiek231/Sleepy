@@ -28,8 +28,15 @@ class ReservationController extends Controller
      */
     public function index(): View
     {
+
+        if(Auth::user()->isAdmin()){
+            $reservations = Reservation::all();
+        }else{
+            $reservations = Reservation::where('user_id', Auth::user()->id)->get();
+        }
+
         return view('reservations.index', [
-            'reservations' => Reservation::where('user_id', Auth::id())->get(),
+            'reservations' => $reservations,
         ]);
     }
 
@@ -80,37 +87,17 @@ class ReservationController extends Controller
         return view('reservations.show', ['reservation' => $reservation, 'totalPrice' => $totalPrice]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Reservation $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateReservationRequest  $request
-     * @param Reservation $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Reservation $reservation
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservation $reservation): RedirectResponse
     {
-        //
+        $reservation = Room::findOrFail($reservation->id);
+        $reservation->delete();
+        return redirect()->route('reservations.index.show');
     }
 }
