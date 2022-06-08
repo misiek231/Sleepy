@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offer;
+use App\Models\Reservation;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -99,6 +102,16 @@ class AuthController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
+        $user = User::findOrFail($user->id);
+        foreach (Offer::where('user_id', '=', $user->id)->get() as $offer) {
+            foreach (Room::where('offer_id', '=', $offer->id)->get() as $room) {
+                foreach (Reservation::where('room_id', '=', $room->id)->get() as $reservation) {
+                    $reservation->delete();
+                }
+                $room->delete();
+            }
+            $offer->delete();
+        }
         $user->delete();
         return redirect()->route('auth.index');
     }

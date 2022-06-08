@@ -79,7 +79,7 @@
         <footer class="card-footer py-3 mt-4 border-top mt-auto">
             <div class="container">
                 <div class="row align-items-center">
-                    <p class="col-12 text-center m-0">© 2021 Sleepy, z o.o.</p>
+                    <p class="col-12 text-center m-0">© 2022 Sleepy, z o.o.</p>
                 </div>
             </div>
         </footer>

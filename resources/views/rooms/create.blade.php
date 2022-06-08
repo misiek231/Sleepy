@@ -37,7 +37,7 @@
             </div>
             <div class="col-6">
                 <label for="beds-amount" class="form-label">Ilośc łóżek</label>
-                <input value="{{$room->beds_amount ?? ''}}" name="beds_amount" type="number" class="form-control @error('beds-amount') is-invalid @else is-valid @enderror" id="beds-amount" placeholder="4">
+                <input value="{{$room->beds_amount ?? ''}}" name="beds_amount" type="number" class="form-control @error('beds_amount') is-invalid @else is-valid @enderror" id="beds-amount" placeholder="4">
             </div>
             <div class="col-12">
                 <label for="description" class="form-label">Opis pokoju</label>
