@@ -25,7 +25,7 @@
         </div>
         <div class="row mt-1">
             @foreach ($offer->rooms as $room)
-                @if($room->deleted == false)
+                @if(!$room->deleted)
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">

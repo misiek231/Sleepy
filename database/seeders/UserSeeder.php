@@ -24,7 +24,6 @@ class UserSeeder extends Seeder
         Offer::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
-        //User::factory(10)->create();
 
         User::upsert(
             [

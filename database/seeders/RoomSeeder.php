@@ -19,7 +19,6 @@ class RoomSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         Room::truncate();
         Schema::enableForeignKeyConstraints();
-        // Room::factory(500)->create();
 
         Room::upsert(
             [
