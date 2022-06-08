@@ -1,10 +1,9 @@
 <x-global>
-    <div id="..." class="container mt-3 mb-5">
-        <div class="mt-4 mb-4">
-            <div class="row">
-                <h1>Zaloguj się</h1>
-            </div>
-        </div>
+    <div class="d-flex flex-column align-items-center justify-content-center gap-3" style="height: 80vh">
+
+
+        <h1>Zaloguj się</h1>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -14,21 +13,20 @@
                 </ul>
             </div>
         @endif
-        <form method="POST" action="{{ route('login.authenticate') }}">
+        <form method="POST" action="{{ route('login.authenticate') }}" class="d-flex flex-column gap-3">
             @csrf
-            <!-- Email Address -->
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" value="{{ old('email') }}"
-                class="@error('email') is-invalid @else is-valid @enderror">
+                class="form-control @error('email') is-invalid @else is-valid @enderror">
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="password">Hasło</label>
                 <input id="password" name="password" type="password"
-                    class="@error('password') is-invalid @else is-valid @enderror">
+                    class="form-control @error('password') is-invalid @else is-valid @enderror">
             </div>
-            <div class="form-group mt-4">
-                <input type="submit" value="Wyślij">
+            <div class="form-group align-self-center">
+                <input type="submit" value="Zaloguj" class="btn btn-primary">
             </div>
         </form>
     </div>

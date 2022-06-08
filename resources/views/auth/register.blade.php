@@ -1,10 +1,8 @@
 <x-global>
-    <div id="..." class="container mt-3 mb-5">
-        <div class="mt-4 mb-4">
-            <div class="row">
-                <h1>Zarejestruj się</h1>
-            </div>
-        </div>
+    <div class="d-flex flex-column align-items-center justify-content-center" style="height: 80vh">
+
+        <h1>Zarejestruj się</h1>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -14,48 +12,51 @@
                 </ul>
             </div>
         @endif
-        <form method="POST" action="{{ route('register.store') }}">
+
+        <form method="POST" action="{{ route('register.store') }}" class="d-flex flex-column gap-2">
             @csrf
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="name">Imię</label>
                 <input id="name" name="name" type="text" value="{{ old('name') }}"
-                class="@error('name') is-invalid @else is-valid @enderror">
+                class="form-control @error('name') is-invalid @else is-valid @enderror">
             </div>
-            <!-- Email Address -->
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" value="{{ old('email') }}"
-                class="@error('email') is-invalid @else is-valid @enderror">
+                class="form-control @error('email') is-invalid @else is-valid @enderror">
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="password">Hasło</label>
                 <input id="password" name="password" type="password"
-                    class="@error('password') is-invalid @else is-valid @enderror">
+                    class="form-control @error('password') is-invalid @else is-valid @enderror">
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <label for="password_confirmation">Potwierdź hasło</label>
                 <input id="password_confirmation" name="password_confirmation" type="password"
-                    class="@error('password_confirmation') is-invalid @else is-valid @enderror">
+                    class="form-control @error('password_confirmation') is-invalid @else is-valid @enderror">
             </div>
+            <div class="form-group d-flex justify-content-around mt-2 mb-2">
+                <div class="form-check">
+                    <input id="offer-maker"
+                           name="role_id"
+                           type="radio"
+                           class="form-check-input @error('role_id') is-invalid @else is-valid @enderror"
+                           value="2">
 
-            <div class="form-group mb-2">
+                    <label class="form-check-label" for="offer-maker">Twórca ofert</label>
+                </div>
+                <div class="form-check">
+                    <input id="offer-taker"
+                           name="role_id"
+                           type="radio"
+                           class="form-check-input @error('role_id') is-invalid @else is-valid @enderror"
+                           value="3">
 
-                <input id="offer-maker"
-                       name="role_id"
-                       type="radio"
-                       value="2">
-
-                <label for="offer-maker">Twórca ofert</label>
-
-                <input id="offer-taker"
-                       name="role_id"
-                       type="radio"
-                       value="3">
-
-                <label for="offer-taker">Klient</label>
+                    <label class="form-check-label" for="offer-taker">Klient</label>
+                </div>
             </div>
-            <div class="form-group mt-4">
-                <input type="submit" value="Wyślij">
+            <div class="form-group align-self-center">
+                <input type="submit" value="Rejestracja" class="btn btn-primary">
             </div>
         </form>
     </div>

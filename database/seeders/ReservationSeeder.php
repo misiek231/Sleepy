@@ -21,6 +21,17 @@ class ReservationSeeder extends Seeder
         Reservation::truncate();
         Schema::enableForeignKeyConstraints();
 
-        //Reservation::factory(40)->create();
+        Reservation::upsert(
+            [
+                [
+                    'date_from' => '2022-08-09',
+                    'date_to' => '2022-08-18',
+                    'room_id' => 1,
+                    'user_id' => 3,
+                    'price' => 2000,
+                ],
+            ],
+            'date_form'
+        );
     }
 }
