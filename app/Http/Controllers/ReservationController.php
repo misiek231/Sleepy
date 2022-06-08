@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Room;
-use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ReservationController extends Controller
@@ -48,7 +45,7 @@ class ReservationController extends Controller
      */
     public function create(int $roomId): View
     {
-        $room = Room::findOrFail($roomId);
+        $room = Room::where('deleted', '<>', true)->findOrFail($roomId);
         $disabledDates = $room->reservations->map(function ($reservation) {
             return [
                 'start' => $reservation->date_from,
@@ -67,7 +64,16 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request): RedirectResponse
     {
         $requestData = $request->all();
+        $room = Room::where('deleted', '<>', true)->findOrFail($request->room_id);
+
+        foreach ($room->reservations as $reservation)
+            if ($reservation->date_from <= $request->date_to and $request->date_from <= $reservation->date_to)
+                return redirect()->back()->withErrors(['date_from' => 'Pokój jest już zarezerwowany w tym terminie']);
+
+        $totalPrice = $room->price * Date::createFromFormat('Y-m-d', $request->date_to)->diffInDays(Date::createFromFormat('Y-m-d', $request->date_from));
+
         $requestData['user_id'] = Auth::id();
+        $requestData['price'] = $totalPrice;
         Reservation::create($requestData);
         return redirect()->route('reservations.index');
     }
@@ -80,13 +86,8 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation): View
     {
-        $dateFrom = Date::createFromFormat('Y-m-d', $reservation->date_from);
-        $dateTo = Date::createFromFormat('Y-m-d', $reservation->date_to);
-        $totalPrice = $reservation->room->price * $dateTo->diffInDays($dateFrom);
-
-        return view('reservations.show', ['reservation' => $reservation, 'totalPrice' => $totalPrice]);
+        return view('reservations.show', ['reservation' => $reservation]);
     }
-
 
     /**
      * Remove the specified resource from storage.

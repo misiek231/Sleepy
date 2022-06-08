@@ -27,7 +27,7 @@ class StoreRoomRequest extends FormRequest
             'name' => 'required|unique:offers,name,',
             'price' => 'required|numeric',
             'beds_amount' => 'required|numeric',
-            'description' => 'required',
+            'description' => 'required|max:1000',
         ];
     }
 }

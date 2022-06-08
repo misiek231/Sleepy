@@ -21,6 +21,6 @@
 
         <h3 class="mt-5">Zakwaterowanie:</h3>
         <p>Data: {{$reservation->date_from}} - {{$reservation->date_to}}</p>
-        <p>Do zapłaty: {{$totalPrice}} zł</p>
+        <p>Do zapłaty: {{$reservation->price}} zł</p>
     </div>
 </x-global>

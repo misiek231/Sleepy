@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('date_to');
             $table->foreignIdFor(Room::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
+            $table->decimal("price");
         });
     }
 

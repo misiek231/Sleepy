@@ -11,7 +11,7 @@ class Offer extends Model
 {
     use HasFactory, Filterable;
 
-    protected $fillable = ['name', 'description', 'place', 'image','accommodationType', 'user_id'];
+    protected $fillable = ['name', 'description', 'place', 'image','accommodationType', 'user_id', 'deleted'];
 
     public function rooms(): HasMany
     {

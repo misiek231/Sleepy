@@ -32,7 +32,13 @@
             </div>
             <div class="col-6">
                 <label for="accommodationType" class="form-label">Rodzaj zakwaterowania</label>
-                <input value="{{$offer->accommodationType ?? ''}}" name="accommodationType" type="text" class="form-control @error('accommodationType') is-invalid @else is-valid @enderror" id="accommodationType" placeholder="Pensjonat">
+
+                <select id="accommodationType" name="accommodationType" class="form-select @error('accommodationType') is-invalid @else is-valid @enderror" aria-label="Default select example">
+                    <option @if(!isset($offer)) selected @endif>Wybierz</option>
+                    <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Hotel">Hotel</option>
+                    <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Pensjonat">Pensjonat</option>
+                    <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Kwatera prywatna">Kwatera prywatna</option>
+                </select>
             </div>
             @if(!isset($offer))
                 <div class="col-6">

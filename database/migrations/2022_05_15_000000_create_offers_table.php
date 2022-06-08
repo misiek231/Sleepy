@@ -23,7 +23,9 @@ return new class extends Migration
             $table->string('image');
             $table->string('place');
             $table->string('accommodationType');
+            $table->boolean('deleted')->default(false);
             $table->foreignIdFor(User::class)->constrained();
+
         });
     }
 

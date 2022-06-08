@@ -34,16 +34,6 @@ class RoomController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @param int $offerId
@@ -52,7 +42,7 @@ class RoomController extends Controller
      */
     public function create(int $offerId): View
     {
-        $offer = Offer::findOrFail($offerId);
+        $offer = Offer::where('deleted', '<>', true)->findOrFail($offerId);
         $this->authorize('create', [Room::class, $offer]);
         return view('rooms.create', ['offer' => $offer]);
     }
@@ -66,7 +56,7 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request): RedirectResponse
     {
-        $offer = Offer::findOrFail($request->offer_id);
+        $offer = Offer::where('deleted', '<>', true)->findOrFail($request->offer_id);
         $this->authorize('create', [Room::class, $offer]);
         $requestData = $request->all();
         $room = Room::create($requestData);
@@ -82,7 +72,7 @@ class RoomController extends Controller
      */
     public function show(Room $room): View
     {
-        $room = Room::findOrFail($room->id);
+        $room = Room::where('deleted', '<>', true)->findOrFail($room->id);
         $disabledDates = $room->reservations->map(function ($reservation) {
             return [
                 'start' => $reservation->date_from,
@@ -104,7 +94,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room): View
     {
-        $room = Room::findOrFail($room->id);
+        $room = Room::where('deleted', '<>', true)->findOrFail($room->id);
         $offer = $room->offer;
         return view('rooms.create', ['room' => $room, 'offer' => $offer]);
     }
@@ -118,7 +108,7 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room): RedirectResponse
     {
-        $room = Room::findOrFail($room->id);
+        $room = Room::where('deleted', '<>', true)->findOrFail($room->id);
         $input = $request->all();
         $room->update($input);
         return redirect()->route('rooms.show', $room->id);
@@ -132,9 +122,9 @@ class RoomController extends Controller
      */
     public function destroy(Room $room): RedirectResponse
     {
-        $room = Room::findOrFail($room->id);
-        $room->reservations->delete();
-        $room->delete();
+        $room = Room::where('deleted', '<>', true)->findOrFail($room->id);
+        $room->deleted = true;
+        $room->save();
         return redirect()->route('offers.show', $room->offer_id);
     }
 }

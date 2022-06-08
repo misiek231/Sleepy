@@ -7,7 +7,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{$offer->name}}</h5>
                 <p class="card-text">{{$offer->description}}</p>
-                <p class="card-text"><small class="text-muted">Już od: {{ min(array_column($offer->rooms->all(), 'price')) }} zł/doba</small></p>
+                @if($offer->rooms->count() > 0)
+                    <p class="card-text"><small class="text-muted">Już od: {{ min(array_column($offer->rooms->all(), 'price')) }} zł/doba</small></p>
+                @else
+                    <p class="card-text"><small class="text-muted" style="color: red !important">Brak dostępnych pokoi</small></p>
+                @endif
+
                 <a href="{{route("offers.show", $offer->id)}}" class="btn btn-info">Sprawdź szczegóły</a>
                 @if($canManage)
                     <a href="{{route("offers.edit", $offer->id)}}" class="btn btn-primary">Edytuj</a>

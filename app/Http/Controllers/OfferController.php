@@ -6,6 +6,7 @@ use App\Http\Requests\Filters\OfferFilterRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Offer;
+use App\Models\Room;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +38,7 @@ class OfferController extends Controller
     public function index(OfferFilterRequest $request): View
     {
         return view('offers.index', [
-            'offers' => Offer::filter($request)->paginate(10),
+            'offers' => Offer::filter($request)->where('deleted', '<>', true)->paginate(10),
         ]);
     }
 
@@ -51,7 +52,7 @@ class OfferController extends Controller
     {
         $this->authorize('viewMy', Offer::class);
         return view('offers.my-offers', [
-            'offers' => Offer::where('user_id', '=', Auth::id())->paginate(10),
+            'offers' => Offer::where('deleted', '<>', true)->where('user_id', '=', Auth::id())->paginate(10),
         ]);
     }
 
@@ -91,7 +92,7 @@ class OfferController extends Controller
     public function show(Offer $offer): View
     {
         return view('offers.show', [
-            'offer' => Offer::findOrFail($offer->id)
+            'offer' => Offer::where('deleted', '<>', true)->findOrFail($offer->id)
         ]);
     }
 
@@ -104,7 +105,7 @@ class OfferController extends Controller
     public function edit(Offer $offer): View
     {
         return view('offers.create', [
-            'offer' => Offer::findOrFail($offer->id)
+            'offer' => Offer::where('deleted', '<>', true)->findOrFail($offer->id)
         ]);
     }
 
@@ -117,7 +118,7 @@ class OfferController extends Controller
      */
     public function update(UpdateOfferRequest $request, Offer $offer): RedirectResponse
     {
-        $trip = Offer::findOrFail($offer->id);
+        $trip = Offer::where('deleted', '<>', true)->ffindOrFail($offer->id);
         $oldFileName = $trip->image;
         $input = $request->all();
         $trip->update($input);
@@ -139,9 +140,13 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer): RedirectResponse
     {
-        $offer = Offer::findOrFail($offer->id);
-        $offer->rooms()->delete();
-        $offer->delete();
+        $offer = Offer::where('deleted', '<>', true)->findOrFail($offer->id);
+        foreach ($offer->rooms as $room) {
+            $room->deleted = true;
+            $room->save();
+        };
+        $offer->deleted = true;
+        $offer->save();
         return redirect()->route('offers.my');
     }
 }

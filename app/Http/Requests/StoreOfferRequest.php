@@ -26,8 +26,8 @@ class StoreOfferRequest extends FormRequest
         return [
             'name' => 'required|unique:offers,name,',
             'place' => 'required',
-            'accommodationType' => 'required',
-            'description' => 'required',
+            'accommodationType' => 'required|in:Pensjonat,Hotel,Apartament',
+            'description' => 'required|max:1000',
             'image' => 'required|mimes:jpg,png,jpeg,gif,svg',
         ];
     }

@@ -10,7 +10,6 @@ class OfferFilterRequest extends FormRequest implements Filter
 {
     public function filter(Builder $builder)
     {
-
         $props = $this->all();
 
         if(isset($props['name'])) {

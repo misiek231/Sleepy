@@ -22,7 +22,6 @@ class OfferSeeder extends Seeder
         Offer::truncate();
         Schema::enableForeignKeyConstraints();
         //Offer::factory(50)->create();
-
         Offer::upsert(
             [
                 [

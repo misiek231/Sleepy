@@ -9,7 +9,7 @@
         <title>Sleepy</title>
     </head>
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
@@ -76,18 +76,10 @@
 
         <div class="mt-5 pt-3">{{ $slot }}</div>
 
-        <footer class="card-footer py-3 mt-4 border-top">
+        <footer class="card-footer py-3 mt-4 border-top mt-auto">
             <div class="container">
                 <div class="row align-items-center">
-                    <p class="col-lg-6 col-sm-12 text-center m-0">© 2021 Company, Inc</p>
-
-                    <div class="col-lg-6 col-sm-12 d-flex flex-row justify-content-center">
-                        <a href="#" class="nav-link px-2 text-muted">Home</a>
-                        <a href="#" class="nav-link px-2 text-muted">Features</a>
-                        <a href="#" class="nav-link px-2 text-muted">Pricing</a>
-                        <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-                        <a href="#" class="nav-link px-2 text-muted">About</a>
-                    </div>
+                    <p class="col-12 text-center m-0">© 2021 Sleepy, z o.o.</p>
                 </div>
             </div>
         </footer>

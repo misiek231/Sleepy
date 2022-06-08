@@ -62,7 +62,7 @@ return [
         'string' => 'The :attribute must be greater than or equal to :value characters.',
     ],
     'image' => 'The :attribute must be an image.',
-    'in' => 'The selected :attribute is invalid.',
+    'in' => 'Wybrany :attribute jest nieprawidłowy.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
     'ip' => 'The :attribute must be a valid IP address.',
@@ -167,6 +167,6 @@ return [
     'attributes' => [
         'date_from' => 'data od',
         'date_to' => 'data do',
+        'accommodationType' => 'rodzaj zakwaterowania',
     ],
-
 ];

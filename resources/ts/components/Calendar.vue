@@ -31,26 +31,6 @@ export default class Calendar extends Vue {
     private days: number = 0
     private priceCounted: number = 0
 
-    //private attributes: any[];
-
-    // created() {
-    //     console.log('created');
-    //     console.log(this.disabledDates);
-    //
-    //     this.attributes = [
-    //         {
-    //             key: 'today',
-    //             highlight: true,
-    //             dates: [
-    //                 { start: new Date(2022, 4, 2), end: new Date(2022, 4, 5) },
-    //                 { start: new Date(2022, 4, 15), span: 5 } // # of days
-    //             ]
-    //         }
-    //     ]
-    // }
-
-
-
     private onInput(value: DateRange): void {
 
         if (value) {

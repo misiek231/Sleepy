@@ -27,7 +27,7 @@ class UpdateOfferRequest extends FormRequest
             'name' => 'required|unique:offers,name,',
             'place' => 'required',
             'accommodationType' => 'required',
-            'description' => 'required',
+            'description' => 'required|max:1000',
         ];
     }
 }

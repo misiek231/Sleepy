@@ -48,7 +48,7 @@
                 @endif
 
                 @canany(['is-offer-taker', 'is-admin'])
-                    <button type="submit" class="btn btn-primary">Rezerwacja</button>
+                    <button type="submit" class="btn btn-primary mb-3">Rezerwacja</button>
                 @endcan
             </form>
     </div>
