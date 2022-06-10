@@ -24,9 +24,9 @@ class UpdateOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:offers,name,',
+            'name' => 'required|unique:offers,name,' . $this->route('offer')->id,
             'place' => 'required',
-            'accommodationType' => 'required',
+            'accommodationType' => 'required|in:Pensjonat,Hotel,Kwatera prywatna',
             'description' => 'required|max:1000',
         ];
     }

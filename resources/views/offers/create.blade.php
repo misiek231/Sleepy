@@ -36,8 +36,8 @@
                 <select id="accommodationType" name="accommodationType" class="form-select @error('accommodationType') is-invalid @else is-valid @enderror" aria-label="Default select example">
                     <option @if(!isset($offer)) selected @endif>Wybierz</option>
                     <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Hotel">Hotel</option>
-                    <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Pensjonat">Pensjonat</option>
-                    <option @if(isset($offer) and $offer->accommodationType == 'Hotel') selected @endif value="Kwatera prywatna">Kwatera prywatna</option>
+                    <option @if(isset($offer) and $offer->accommodationType == 'Pensjonat') selected @endif value="Pensjonat">Pensjonat</option>
+                    <option @if(isset($offer) and $offer->accommodationType == 'Kwatera prywatna') selected @endif value="Kwatera prywatna">Kwatera prywatna</option>
                 </select>
             </div>
             @if(!isset($offer))

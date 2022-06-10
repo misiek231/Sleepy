@@ -118,7 +118,7 @@ class OfferController extends Controller
      */
     public function update(UpdateOfferRequest $request, Offer $offer): RedirectResponse
     {
-        $trip = Offer::where('deleted', '<>', true)->ffindOrFail($offer->id);
+        $trip = Offer::where('deleted', '<>', true)->findOrFail($offer->id);
         $oldFileName = $trip->image;
         $input = $request->all();
         $trip->update($input);
